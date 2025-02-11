@@ -1,0 +1,148 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "05facb86-01c9-45a1-8e49-f215d76eb708",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from langchain_groq import ChatGroq"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "b78a83a1-eed7-471a-b6ec-f98fa5fec3bb",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Enter a sentence to analyze the sentiment and receive suggestions (type 'exit' to quit):\n"
+     ]
+    },
+    {
+     "name": "stdin",
+     "output_type": "stream",
+     "text": [
+      "Your input:  product review\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Result:\n",
+      "Sure, I'd be happy to help! Please provide me with the text you would like me to analyze.\n",
+      "\n",
+      "---\n",
+      "\n",
+      "**Product Review:**\n",
+      "\n",
+      "\"I recently purchased the new XYZ gadget and I must say, I am thoroughly impressed. The device is well-made, easy to use, and has exceeded my expectations in terms of performance. I would highly recommend it to anyone looking for a reliable and efficient solution. The customer service was also top-notch, making the overall experience even better.\"\n",
+      "\n",
+      "---\n",
+      "\n",
+      "Based on the sentiment of the text, I would classify it as **Positive**. The reviewer expresses satisfaction with the product's quality, ease of use, and\n",
+      "\n"
+     ]
+    },
+    {
+     "name": "stdin",
+     "output_type": "stream",
+     "text": [
+      "Your input:  the color of the dress is not good\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Result:\n",
+      "1. The sentiment of the text: 'Negative'\n",
+      "2. A helpful suggestion or advice based on the sentiment:\n",
+      "- If you're not satisfied with the color of the dress, consider exploring different colors or shades that might better suit your preference. You could also try accessorizing with jewelry or a scarf to enhance the overall look.\n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "\n",
+    "\n",
+    "\n",
+    "llm = ChatGroq(\n",
+    "    model=\"mixtral-8x7b-32768\",\n",
+    "    temperature=0.2,\n",
+    "    groq_api_key=\"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\" \n",
+    ")\n",
+    "\n",
+    "\n",
+    "def analyze_sentiment_and_suggest(text):\n",
+    "    prompt = f\"\"\"\n",
+    "    You are an assistant that \n",
+    "    analyzes the sentiment of a \n",
+    "    given text and provides useful suggestions\n",
+    "    based on the tone of the text:\n",
+    "    ---\n",
+    "    {text}\n",
+    "    ---\n",
+    "    Based on the sentiment of the text,\n",
+    "    please provide one of the following:\n",
+    "    1. The sentiment of the text: 'Positive', 'Negative', or 'Neutral'.\n",
+    "    2. A helpful suggestion or advice based on the sentiment:\n",
+    "        - If the sentiment is positive, suggest ways to maintain or enhance it.\n",
+    "        - If the sentiment is negative, suggest ways to improve or overcome the negativity.\n",
+    "        - If the sentiment is neutral, suggest ways to add more emotion or perspective to the text.\n",
+    "    \"\"\"\n",
+    "    \n",
+    "    \n",
+    "    response = llm.invoke(prompt, max_tokens=150)\n",
+    "    return response.content.strip()\n",
+    "\n",
+    "\n",
+    "def main():\n",
+    "    print(\"Enter a sentence to analyze the sentiment and receive suggestions (type 'exit' to quit):\")\n",
+    "    while True:\n",
+    "        user_input = input(\"Your input: \")\n",
+    "        \n",
+    "        \n",
+    "        if user_input.lower() == 'exit':\n",
+    "            print(\"Exiting the sentiment analysis tool.\")\n",
+    "            break\n",
+    "        \n",
+    "       \n",
+    "        result = analyze_sentiment_and_suggest(user_input)\n",
+    "        \n",
+    "        \n",
+    "        print(f\"Result:\\n{result}\\n\")\n",
+    "\n",
+    "\n",
+    "\n",
+    "main()"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.12.5"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
